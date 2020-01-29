@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Menu;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data['menus'] = Menu::paginate(10);
+        return view('home',$data);
+    }
+    
+    /**
+     * A function that adds a new menu to the database. At the beginning it checks if a similar name already exists in the database so that it does not repeat.
+     * @param Request $req
+     * @return redirect
+     */
+    public function menuAdd(Request $req)
+    {        
+        $req->validate(['name' => 'required|unique:menus|max:191']); 
+        
+        $menu = New Menu();
+        $menu->name = $req->name;
+        $menu->parent_id = $req->parent_id;
+        $menu->slug = Str::slug($req->name);
+        $menu->save();
+        
+        return redirect()->back()->with('status','Added correctly!');
+    }
+    
+    /**
+     * Function to deleted menu from database
+     * @param type $id
+     * @return redirect 
+     */
+    public function menuDelete($id)
+    {
+        $menu = Menu::findOrFail($id);
+        $menu->delete();
+        
+        return redirect()->back()->with('status','Deleted correctly!');
     }
 }
