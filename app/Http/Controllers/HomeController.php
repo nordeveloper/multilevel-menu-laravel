@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Menu;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -44,6 +45,8 @@ class HomeController extends Controller
         $menu->slug = Str::slug($req->name);
         $menu->save();
         
+        Cache::forget('menus_cache');
+        
         return redirect()->back()->with('status','Added correctly!');
     }
     
@@ -56,6 +59,8 @@ class HomeController extends Controller
     {
         $menu = Menu::findOrFail($id);
         $menu->delete();
+        
+        Cache::forget('menus_cache');
         
         return redirect()->back()->with('status','Deleted correctly!');
     }

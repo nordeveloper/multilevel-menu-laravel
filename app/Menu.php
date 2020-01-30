@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Menu extends Model
 {
@@ -22,8 +23,12 @@ class Menu extends Model
     }
     
     public static function showMenu()
-    {
-        return static::generateMenu();    
+    {        
+        $data = Cache::get('menus_cache', null);         
+        if (!is_null($data)) return $data;        
+        $data = static::generateMenu();      
+        Cache::put('menus_cache', $data, now()->addMinutes(60));        
+        return $data;    
     }
     
     private static function generateMenu($parent_id=null)
