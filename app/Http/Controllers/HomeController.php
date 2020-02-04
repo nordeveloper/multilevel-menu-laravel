@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data['menus'] = Menu::paginate(10);
+        $data['menus'] = Menu::select('id','name','parent_id')->paginate(10);
         return view('home',$data);
     }
     
