@@ -15,7 +15,10 @@ Route::get('/', 'PageController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home/menu/add', 'HomeController@menuAdd')->name('homeMenuAdd');
-Route::get('/home/menu/{id}/delete', 'HomeController@menuDelete')->name('homeMenuDelete');
-Route::get('/{slug}', 'PageController@page')->name('homePage');
+Route::prefix('home')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::post('/menu/add', 'HomeController@menuAdd')->name('homeMenuAdd');
+    Route::get('/menu/{id}/delete', 'HomeController@menuDelete')->name('homeMenuDelete');   
+});
+
+Route::get('/{slug}', 'PageController@page')->name('page');

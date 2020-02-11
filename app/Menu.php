@@ -27,7 +27,7 @@ class Menu extends Model
         $data = Cache::get('menus_cache', null);         
         if (!is_null($data)) return $data;        
         $data = static::generateMenu();      
-        Cache::put('menus_cache', $data, now()->addMinutes(60));        
+        Cache::put('menus_cache', $data, now()->addMinutes(60 * 24 * 7));        
         return $data;    
     }
     
@@ -48,9 +48,9 @@ class Menu extends Model
             {
                 if(is_null($row->parent_id))
                 {
-                    $result .= '<li class="nav-item"><a href="'.route('homePage', [$row->slug]).'" class="nav-link">'.$row->name.'</a>';
+                    $result .= '<li class="nav-item"><a href="'.route('page', [$row->slug]).'" class="nav-link">'.$row->name.'</a>';
                 }else{
-                    $result .= '<li><a href="'.route('homePage', [$row->slug]).'" class="dropdown-item">'.$row->name.'</a>';
+                    $result .= '<li><a href="'.route('page', [$row->slug]).'" class="dropdown-item">'.$row->name.'</a>';
                 }                
             }else{                
                 if(is_null($row->parent_id))
