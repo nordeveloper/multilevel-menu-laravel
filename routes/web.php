@@ -12,13 +12,12 @@
 */
 
 Route::get('/', 'PageController@index');
-
 Auth::routes();
 
-Route::prefix('home')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
-    Route::post('/menu/add', 'HomeController@menuAdd')->name('homeMenuAdd');
-    Route::get('/menu/{id}/delete', 'HomeController@menuDelete')->name('homeMenuDelete');   
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@index')->name('admin');
+    Route::post('/menu/add', 'AdminController@add')->name('adminMenuAdd');
+    Route::get('/menu/{id}/delete', 'AdminController@delete')->name('adminMenuDelete');   
 });
 
 Route::get('/{slug}', 'PageController@page')->name('page');

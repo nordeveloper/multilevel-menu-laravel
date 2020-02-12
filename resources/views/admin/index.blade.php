@@ -27,7 +27,7 @@
                                 <td>{{ !empty($menu->parent_id) ? $menu->Main->name : 'Main menu..' }}</td>
                                 <td>
                                     <span class="float-sm-right"> 
-                                        <a href="{{ route('homeMenuDelete', ['id' => $menu->id]) }}" class="btn btn-danger">Delete</a>
+                                        <a href="{{ route('adminMenuDelete', ['id' => $menu->id]) }}" class="btn btn-danger">Delete</a>
                                     </span>
                                 </td>
                             </tr>
@@ -54,7 +54,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form action="{{ route('homeMenuAdd') }}" method="post">
+        <form action="{{ route('adminMenuAdd') }}" method="post">
             <div class="modal-body">        
                 @csrf
                 <div class="form-group">
